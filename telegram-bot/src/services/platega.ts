@@ -25,8 +25,8 @@ const createUrl = async (payload: { method: PaymentMethod; amount: string; descr
           currency: "RUB",
         },
         description: payload.description,
-        return: "https://google.com/success",
-        failedUrl: "https://google.com/fail",
+        return: "https://pay.platega.io/success",
+        failedUrl: "https://pay.platega.io/fail",
       },
     })
     .catch(() => undefined);
