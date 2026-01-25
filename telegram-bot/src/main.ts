@@ -18,7 +18,10 @@ try {
   register(bot);
   await bot.init();
   console.log(`[ TELEGRAM ] Бот инициализирован.`);
-  await bot.api.setMyCommands([{ command: "menu", description: "Меню бота" }]);
+  await bot.api.setMyCommands([
+    { command: "menu", description: "Меню бота" },
+    { command: "docs", description: "Политика конфиденциальности и пользовательское соглашение" },
+  ]);
   console.log(`[ TELEGRAM ] Команды обновлены.`);
   bot.start();
 } catch (error) {

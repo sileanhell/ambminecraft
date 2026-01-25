@@ -4,10 +4,11 @@ interface ReturnType {
   caption: string;
   parse_mode: ParseMode;
   inline_keyboard: InlineKeyboardButton[][];
+  image: string;
 }
 
 const amount = (): ReturnType => ({
-  caption: "💵 <b>Укажите сумму пожертвований</b>",
+  caption: "💵 <b>Укажите сумму пожертвований:</b>",
   parse_mode: "HTML",
   inline_keyboard: [
     [
@@ -17,6 +18,7 @@ const amount = (): ReturnType => ({
       },
     ],
   ],
+  image: "https://eco18.com/wp-content/uploads/2020/06/AdobeStock_77967812-scaled.jpeg",
 });
 
 const method = (amount: string): ReturnType => ({
@@ -40,6 +42,7 @@ const method = (amount: string): ReturnType => ({
       },
     ],
   ],
+  image: "https://eco18.com/wp-content/uploads/2020/06/AdobeStock_77967812-scaled.jpeg",
 });
 
 export const UI_DonateProcessing = { amount, method };

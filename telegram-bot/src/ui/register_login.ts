@@ -4,6 +4,7 @@ type ReturnType = () => {
   caption: string;
   parse_mode: ParseMode;
   inline_keyboard: InlineKeyboardButton[][];
+  image: string;
 };
 
 export const UI_RegisterLogin: ReturnType = () => ({
@@ -18,9 +19,10 @@ export const UI_RegisterLogin: ReturnType = () => ({
   inline_keyboard: [
     [
       {
-        text: "« Отменить",
-        callback_data: "menu",
+        text: "Отменить",
+        callback_data: "cancel",
       },
     ],
   ],
+  image: "https://eco18.com/wp-content/uploads/2020/06/AdobeStock_77967812-scaled.jpeg",
 });

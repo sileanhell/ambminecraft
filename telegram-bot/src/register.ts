@@ -1,4 +1,6 @@
 import type { Api, Bot, Context, RawApi } from "grammy";
+import { back_menu } from "./actions/back_menu";
+import { cancel } from "./actions/cancel";
 import { change_login } from "./actions/change_login";
 import { change_password } from "./actions/change_password";
 import { donate } from "./actions/donate";
@@ -8,6 +10,7 @@ import { payment_cancel } from "./actions/payment_cancel";
 import { payment_card } from "./actions/payment_card";
 import { payment_sbp } from "./actions/payment_sbp";
 import { settings } from "./actions/settings";
+import { docs } from "./commands/docs";
 import { start } from "./commands/start";
 import { awaitingMessage } from "./controllers/awaitingMessage";
 import { PaymentTarget } from "./controllers/payments";
@@ -15,10 +18,12 @@ import { PaymentTarget } from "./controllers/payments";
 export const register = (bot: Bot<Context, Api<RawApi>>) => {
   bot.command("start", (ctx) => start(ctx));
   bot.command("menu", (ctx) => start(ctx));
+  bot.command("docs", (ctx) => docs(ctx));
 
   bot.on("message:text", (ctx) => awaitingMessage.handle(ctx));
 
-  bot.callbackQuery("menu", (ctx) => start(ctx));
+  bot.callbackQuery("menu", (ctx) => back_menu(ctx));
+  bot.callbackQuery("cancel", (ctx) => cancel(ctx));
 
   bot.callbackQuery("donate", (ctx) => donate(ctx));
   bot.callbackQuery("donate_processing", (ctx) => donate_processing(ctx));

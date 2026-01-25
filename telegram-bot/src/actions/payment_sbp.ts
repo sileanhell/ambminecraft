@@ -4,7 +4,7 @@ import { db } from "@/database/connect";
 import { payments } from "@/database/tables/payments";
 import { PaymentMethod, Platega } from "@/services/platega";
 import { UI_Payment } from "@/ui/payment";
-import type { Context } from "grammy";
+import { InputMediaBuilder, type Context } from "grammy";
 
 export const payment_sbp = async (ctx: Context, target: PaymentTarget, amount?: string) => {
   if (!ctx.from) return;
@@ -26,7 +26,7 @@ export const payment_sbp = async (ctx: Context, target: PaymentTarget, amount?: 
       createdAt: time,
       updateAt: time,
     });
-    const { caption, parse_mode, inline_keyboard } = UI_Payment.pending(
+    const { caption, parse_mode, inline_keyboard, image } = UI_Payment.pending(
       {
         transactionId: payment.transactionId,
         target: PaymentTarget[target] as keyof typeof PaymentTarget,
@@ -35,8 +35,21 @@ export const payment_sbp = async (ctx: Context, target: PaymentTarget, amount?: 
       },
       payment.redirect,
     );
-    await ctx.reply(caption, { parse_mode, reply_markup: { inline_keyboard } });
+    await ctx.editMessageMedia(InputMediaBuilder.photo(image, { caption, parse_mode }), { reply_markup: { inline_keyboard } });
   } else {
-    await ctx.reply("⛔️ <b>Не удалось создать платёж.</b>", { parse_mode: "HTML" });
+    await ctx.editMessageCaption({
+      caption: "⛔️ <b>Не удалось создать платёж.</b>",
+      parse_mode: "HTML",
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: "« В меню",
+              callback_data: "menu",
+            },
+          ],
+        ],
+      },
+    });
   }
 };

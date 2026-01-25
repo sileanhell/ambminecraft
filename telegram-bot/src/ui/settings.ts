@@ -8,17 +8,7 @@ interface ReturnType {
 }
 
 export const UI_Settings = (minecraft_nickname: string): ReturnType => ({
-  caption: [
-    "ㅤ",
-    "\n",
-    `◾️ <b>Логин:</b> ${minecraft_nickname}`,
-    "\n",
-    "◾️ <b>Пароль:</b> Зашифровано",
-    // "\n\n",
-    // "<blockquote>После изменения скина/плаща перезайдите на сервер.</blockquote>",
-    "\n",
-    "ㅤ",
-  ].join(""),
+  caption: ["ㅤ", "\n", `◾️ <b>Логин:</b> ${minecraft_nickname}`, "\n", "◾️ <b>Пароль:</b> Зашифровано", "\n", "ㅤ"].join(""),
   parse_mode: "HTML",
   inline_keyboard: [
     [
@@ -33,7 +23,7 @@ export const UI_Settings = (minecraft_nickname: string): ReturnType => ({
     ],
     [
       {
-        text: "« Назад",
+        text: "« В меню",
         callback_data: "menu",
       },
     ],

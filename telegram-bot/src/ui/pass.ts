@@ -35,7 +35,7 @@ export const UI_Pass = (existAccount: boolean): ReturnType => ({
     ],
     [
       {
-        text: "« Назад",
+        text: "« В меню",
         callback_data: "menu",
       },
     ],

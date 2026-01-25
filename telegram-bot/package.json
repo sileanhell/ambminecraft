@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "DEV=1 bun --watch src/main.ts",
     "start": "bun src/main.ts",
-    "database": "drizzle-kit push --force"
+    "database": "drizzle-kit push --force",
+    "build": "bun build --compile --target=bun-linux-x64-musl ./src/main.ts --outfile dist/linux-x64-musl"
   },
   "devDependencies": {
     "@types/bun": "latest",

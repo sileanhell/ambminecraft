@@ -25,7 +25,7 @@ export const UI_Donate = (): ReturnType => ({
     ],
     [
       {
-        text: "« Назад",
+        text: "« В меню",
         callback_data: "menu",
       },
     ],

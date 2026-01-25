@@ -75,7 +75,7 @@ const pending = async (args: {
   telegram_id: number;
 }) => {
   await db.update(payments).set({ status: args.status, updateAt: new Date() }).where(eq(payments.transactionId, args.transactionId));
-  const { caption, parse_mode, inline_keyboard } = UI_Payment.pending(
+  const { caption, parse_mode, inline_keyboard, image } = UI_Payment.pending(
     {
       transactionId: args.transactionId,
       target: PaymentTarget[args.target] as keyof typeof PaymentTarget,
@@ -84,7 +84,7 @@ const pending = async (args: {
     },
     args.url,
   );
-  await bot.api.sendMessage(args.telegram_id, caption, { parse_mode, reply_markup: { inline_keyboard } }).catch(() => {});
+  await bot.api.sendPhoto(args.telegram_id, image, { caption, parse_mode, reply_markup: { inline_keyboard } }).catch(() => {});
 };
 
 const cancled = async (args: {
@@ -99,13 +99,13 @@ const cancled = async (args: {
     .update(payments)
     .set({ status: args.status, updateAt: new Date(), hidden: true })
     .where(eq(payments.transactionId, args.transactionId));
-  const { caption, parse_mode, inline_keyboard } = UI_Payment.cancled({
+  const { caption, parse_mode, inline_keyboard, image } = UI_Payment.cancled({
     transactionId: args.transactionId,
     target: PaymentTarget[args.target] as keyof typeof PaymentTarget,
     method: args.method,
     amount: args.amount,
   });
-  await bot.api.sendMessage(args.telegram_id, caption, { parse_mode, reply_markup: { inline_keyboard } }).catch(() => {});
+  await bot.api.sendPhoto(args.telegram_id, image, { caption, parse_mode, reply_markup: { inline_keyboard } }).catch(() => {});
 };
 
 const confirmed = async (args: {
@@ -120,13 +120,13 @@ const confirmed = async (args: {
     .update(payments)
     .set({ status: args.status, updateAt: new Date(), hidden: true })
     .where(eq(payments.transactionId, args.transactionId));
-  const { caption, parse_mode, inline_keyboard } = UI_Payment.confirmed({
+  const { caption, parse_mode, inline_keyboard, image } = UI_Payment.confirmed({
     transactionId: args.transactionId,
     target: PaymentTarget[args.target] as keyof typeof PaymentTarget,
     method: args.method,
     amount: args.amount,
   });
-  await bot.api.sendMessage(args.telegram_id, caption, { parse_mode, reply_markup: { inline_keyboard } }).catch(() => {});
+  await bot.api.sendPhoto(args.telegram_id, image, { caption, parse_mode, reply_markup: { inline_keyboard } }).catch(() => {});
   await Reward(args.telegram_id, args.target);
 };
 
@@ -142,13 +142,13 @@ const chargebacked = async (args: {
     .update(payments)
     .set({ status: args.status, updateAt: new Date(), hidden: true })
     .where(eq(payments.transactionId, args.transactionId));
-  const { caption, parse_mode, inline_keyboard } = UI_Payment.chargebacked({
+  const { caption, parse_mode, inline_keyboard, image } = UI_Payment.chargebacked({
     transactionId: args.transactionId,
     target: PaymentTarget[args.target] as keyof typeof PaymentTarget,
     method: args.method,
     amount: args.amount,
   });
-  await bot.api.sendMessage(args.telegram_id, caption, { parse_mode, reply_markup: { inline_keyboard } }).catch(() => {});
+  await bot.api.sendPhoto(args.telegram_id, image, { caption, parse_mode, reply_markup: { inline_keyboard } }).catch(() => {});
 };
 
 export const Payments = { check };

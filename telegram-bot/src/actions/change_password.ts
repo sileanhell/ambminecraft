@@ -5,7 +5,6 @@ import { users } from "@/database/tables/users";
 import { UI_ChangePassword } from "@/ui/change_password";
 import { eq } from "drizzle-orm";
 import type { Context } from "grammy";
-import { settings } from "./settings";
 
 export const change_password = async (ctx: Context) => {
   if (!ctx.from) return;
@@ -23,10 +22,41 @@ export const change_password = async (ctx: Context) => {
     awaitingMessage.clear(ctx.from.id);
     await ctx.api.deleteMessage(msg.chat.id, msg.message_id);
 
+    if (password.length < 6 || password.length > 72) {
+      await ctx.editMessageCaption({
+        caption: "⛔️ <b>Длина пароля должна быть от 6 до 72 символов.</b>",
+        parse_mode: "HTML",
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: "🔄 Попробовать ещё раз",
+                callback_data: "change_password",
+              },
+            ],
+          ],
+        },
+      });
+      return;
+    }
+
     const bcryptHash = await Bun.password.hash(password, { algorithm: "bcrypt", cost: 4 });
     await db.update(users).set({ password: bcryptHash }).where(eq(users.telegram_id, ctx.from.id));
     await db.update(authme).set({ password: bcryptHash, hasSession: false }).where(eq(authme.telegram_id, ctx.from.id));
 
-    await settings(ctx);
+    await ctx.editMessageCaption({
+      caption: "✅ <b>Пароль изменён.</b>",
+      parse_mode: "HTML",
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: "« В меню",
+              callback_data: "menu",
+            },
+          ],
+        ],
+      },
+    });
   });
 };
