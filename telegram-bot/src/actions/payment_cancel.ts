@@ -7,11 +7,12 @@ import { and, eq } from "drizzle-orm";
 import { InputMediaBuilder, type Context } from "grammy";
 
 export const payment_cancel = async (ctx: Context) => {
-  if (!ctx.from || !ctx.msg || !ctx.msg.text) return;
+  if (!ctx.from) return;
   awaitingMessage.clear(ctx.from.id);
 
-  const match = ctx.msg.text.match(/ID транзакции:\s*([\w-]+)/);
-  if (!match || !match[1]) return await ctx.deleteMessage().catch(() => {});
+  const text = ctx.update.callback_query?.message?.caption ?? ctx.msg?.text;
+  const match = text?.match(/ID транзакции:\s*([\w-]+)/);
+  if (!match?.[1]) return ctx.deleteMessage().catch(() => {});
 
   const payment = (
     await db
