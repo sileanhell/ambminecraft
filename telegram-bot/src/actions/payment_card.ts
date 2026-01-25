@@ -2,14 +2,18 @@ import { awaitingMessage } from "@/controllers/awaitingMessage";
 import { PaymentTarget } from "@/controllers/payments";
 import { db } from "@/database/connect";
 import { payments } from "@/database/tables/payments";
+import { users } from "@/database/tables/users";
 import { PaymentMethod, Platega } from "@/services/platega";
 import { UI_Payment } from "@/ui/payment";
+import { eq } from "drizzle-orm";
 import { InputMediaBuilder, type Context } from "grammy";
 
 export const payment_card = async (ctx: Context, target: PaymentTarget, amount?: string) => {
   if (!ctx.from) return;
   awaitingMessage.clear(ctx.from.id);
-  await ctx.deleteMessage().catch(() => {});
+
+  const user = (await db.select().from(users).where(eq(users.telegram_id, ctx.from.id)))[0];
+  if (!user) return await ctx.deleteMessage().catch(() => {});
 
   if (!amount || !amount.match(/^-?\d+(\.\d+)?$/)) return;
 
