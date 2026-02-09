@@ -27,11 +27,11 @@ export const register = (bot: Bot<Context, Api<RawApi>>) => {
 
   bot.callbackQuery("donate", (ctx) => donate(ctx));
   bot.callbackQuery("donate_processing", (ctx) => donate_processing(ctx));
-  bot.callbackQuery(/^donate_card_(.+)$/, (ctx) => payment_card(ctx, PaymentTarget.Пожертование, ctx.match[1]));
+  // bot.callbackQuery(/^donate_card_(.+)$/, (ctx) => payment_card(ctx, PaymentTarget.Пожертование, ctx.match[1]));
   bot.callbackQuery(/^donate_sbp_(.+)$/, (ctx) => payment_sbp(ctx, PaymentTarget.Пожертование, ctx.match[1]));
 
   bot.callbackQuery("pass", (ctx) => pass(ctx));
-  bot.callbackQuery("pass_card", (ctx) => payment_card(ctx, PaymentTarget.Проходка, "200"));
+  // bot.callbackQuery("pass_card", (ctx) => payment_card(ctx, PaymentTarget.Проходка, "200"));
   bot.callbackQuery("pass_sbp", (ctx) => payment_sbp(ctx, PaymentTarget.Проходка, "200"));
 
   bot.callbackQuery("settings", (ctx) => settings(ctx));

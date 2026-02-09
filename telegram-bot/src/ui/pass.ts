@@ -23,10 +23,10 @@ export const UI_Pass = (existAccount: boolean): ReturnType => ({
       existAccount
         ? []
         : [
-            {
-              text: "💳 РФ Карта",
-              callback_data: "pass_card",
-            },
+            // {
+            //   text: "💳 РФ Карта",
+            //   callback_data: "pass_card",
+            // },
             {
               text: "🏦 СБП",
               callback_data: "pass_sbp",

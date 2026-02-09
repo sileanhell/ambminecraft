@@ -26,10 +26,10 @@ const method = (amount: string): ReturnType => ({
   parse_mode: "HTML",
   inline_keyboard: [
     [
-      {
-        text: "💳 РФ Карта",
-        callback_data: `donate_card_${amount}`,
-      },
+      // {
+      //   text: "💳 РФ Карта",
+      //   callback_data: `donate_card_${amount}`,
+      // },
       {
         text: "🏦 СБП",
         callback_data: `donate_sbp_${amount}`,
